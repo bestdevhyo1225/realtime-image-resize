@@ -20,7 +20,7 @@
 
 ### :book: Image-Resize 구성도
 
-![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Image-resizing.png?raw=true)
+![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Image-resize.png?raw=true)
 
 <br>
 
