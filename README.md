@@ -20,11 +20,31 @@
 
 ### :book: Image-Resize 구성도
 
-![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Image-resize.png?raw=true)
+|![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Image-resize.png?raw=true)|
+| :----------------------------------: |
+| AWS CloudFront, Lambda@Edge, S3 구성도 |
 
 <br>
 
-## :bookmark: 참고
+### :book: S3 Bucket 생성하기
+
+* 저는 `hyodol-image-resizing` 이라는 Bucket을 만들었습니다.
+
+* 나중에 버킷정책(Bucket Policy)에서 CloudFront 와 Lambda 함수가 접속할 수 있도록 권한을 열어주도록 편집할 예정이고, 우선은 버킷만 만듭니다. 그리고 나서 테스트할 이미지 하나를 업로드 하시면 됩니다.
+
+|![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/bucket-policy.png?raw=true)|
+| :-----------------------------: |
+| 나중에 편집할 버킷정책(Bucket Policy) |
+
+<br>
+
+### :book: AWS CloudFront 배포 만들기
+
+
+
+<br>
+
+### :bookmark: 참고
 
 * [AWS CloudFront](https://aws.amazon.com/ko/cloudfront/)
 
