@@ -58,7 +58,7 @@
 
     * 현재 S3 버킷은 공개된 버킷이 아닙니다. S3 URL을 브라우저에 입력해도 이미지가 나오지 않습니다.
 
-    * CloudFront URL만 허용하려고 했기 때문에 CloudFront에서 설정을 해줘야 합니다.
+    * CloudFront URL만 허용하려고 했기 때문에 반드시 이 설정을 해줘야 합니다.
 
     * `Restrict Bucket Access`을 yes로 선택합니다.
 
