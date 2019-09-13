@@ -1,14 +1,14 @@
-# AWS CloudFront의 Lambda@Edge로 실시간 이미지 리사이즈 구현하기
+## AWS CloudFront의 Lambda@Edge로 실시간 이미지 리사이즈 구현하기
 
 <br>
 
-## :book: AWS CloudFront란?
+### :book: AWS CloudFront란?
 
 * 빠른 전송 속도로 데이터, 동영상, 애플리케이션 및 API를 전 세계 고객에게 안전하게 전송하는 고속 콘텐츠 전송 네트워크(CDN, Contents Delivery Network) 서비스입니다.
 
 <br>
 
-## :book: Lambda@Edge란?
+### :book: Lambda@Edge란?
 
 * AWS CloudFront의 기능 중 하나로서 애플리케이션의 사용자에게 더 가까운 위치에서 코드를 실행하여 성능을 개선하고 지연 시간을 단축할 수 있게 해 줍니다.
 
@@ -20,7 +20,7 @@
 
 <br>
 
-## :book: Image-Resize 구성도
+### :book: Image-Resize 구성도
 
 ![image-resize-architecture](./image/Image-resizing.png)
 
