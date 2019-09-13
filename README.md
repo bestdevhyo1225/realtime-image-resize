@@ -81,7 +81,7 @@
                 "Sid": "1",
                 "Effect": "Allow",
                 "Principal": {
-                    "AWS": "arn:aws:iam::cloudfront:user/YOUR_ORIGIN_ACCESS_IDENTITY"
+                    "AWS": "arn:aws:iam::cloudfront:user/{YOUR_ORIGIN_ACCESS_IDENTITY}"
                 },
                 "Action": "s3:GetObject",
                 "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
