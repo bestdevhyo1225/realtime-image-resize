@@ -32,7 +32,7 @@
 
 * 나중에 버킷정책(Bucket Policy)에서 CloudFront 와 Lambda 함수가 접속할 수 있도록 권한을 열어주도록 편집할 예정이고, 우선은 버킷만 만듭니다. 그리고 나서 테스트할 이미지 하나를 업로드 하시면 됩니다.
 
-|![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/bucket-policy.png?raw=true)|
+|![s3-bucket-policy](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/bucket-policy.png?raw=true)|
 | :-----------------------------: |
 | 나중에 편집할 버킷정책(Bucket Policy) |
 
@@ -40,7 +40,55 @@
 
 ### :book: AWS CloudFront 배포 만들기
 
+* S3와 연결할 CloudFront는 다음과 같은 설정으로 배포를 만들면 됩니다.
 
+* 우선 Create Distribution을 누르고, Web의 Get Started를 누릅니다. (RTMP는 아직 잘 모르겠습니다.)
+
+* 아래와 같은 화면에서 설정을 시작하면 됩니다.
+
+|![cloudfront-deploy-config](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/create-distribution.png?raw=true)|
+| :------------------------------: |
+| CloudFront 배포를 만들기 위한 설정 화면 |
+
+* **Origin Domain Name**
+
+    * `Origin Domain Name`은 방금 생성한 S3 도메인을 선택합니다.
+
+* **Restrict Bucket Access**
+
+    * 현재 S3 버킷은 공개된 버킷이 아닙니다. S3 URL을 브라우저에 입력해도 이미지가 나오지 않습니다.
+
+    * CloudFront URL만 허용하려고 했기 때문에 반드시 이 설정을 해줘야 합니다.
+
+    * `Restrict Bucket Access`을 yes로 선택합니다.
+
+* **Origin Access Identity**
+
+    * `Origin Access Identity`항목에서 `Create a New Identity`를 선택합니다.
+
+* **Grant Read Permissions on Bucket**
+
+    * `Grant Read Permissions on Bucket` 항목에서 `Yes, Update Bucket Policy`를 선택합니다.
+
+    * S3 버킷으로 돌아가서 버킷정책을 확인해보면 자동으로 정책이 추가되었음을 확인할 수 있습니다.
+
+    ```json
+    {
+        "Version": "2008-10-17",
+        "Id": "PolicyForCloudFrontPrivateContent",
+        "Statement": [
+            {
+                "Sid": "1",
+                "Effect": "Allow",
+                "Principal": {
+                    "AWS": "arn:aws:iam::cloudfront:user/YOUR_ORIGIN_ACCESS_IDENTITY"
+                },
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
+            },
+        ]
+    }
+    ```
 
 <br>
 
