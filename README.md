@@ -139,7 +139,6 @@
                 "iam:CreateServiceLinkedRole",
                 "cloudfront:UpdateDistribution",
                 "s3:GetObject"
-                // s3:PutObject는 필요하지 않아서 넣지 않음
             ],
             "Resource": "*",
             "Effect": "Allow"
@@ -195,7 +194,6 @@
     "Version": "2008-10-17",
     "Id": "PolicyForCloudFrontPrivateContent",
     "Statement": [
-        // CloudFront
         {
             "Sid": "1",
             "Effect": "Allow",
@@ -205,7 +203,6 @@
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
         },
-        // Lambda
         {
             "Sid": "2",
             "Effect": "Allow",
