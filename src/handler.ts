@@ -76,11 +76,11 @@ export const handler = async (event: Event, context: object, callback: CallbackF
                 requiredFormat = 'jpeg';
             }
 
-            let metaData: any, resizedImage: any, bytelength: number = 0;
-
             // 응답의 Body를 조작하는데, 크기는 1MB = 1046528byte 이하여야 한다.
             // 이미지의 크기를 한 번 조절했을 때 1MB를 넘는 경우를 대처해야 한다.
             // 응답을 조작하지 않는다면 1MB 이상의 응답이 가능하다.
+            let metaData: any, resizedImage: any, bytelength: number = 0;
+
             while (true) {
                 resizedImage = await sharp(s3Object.body).rotate();
                 metaData = await resizedImage.metadata();
@@ -90,7 +90,7 @@ export const handler = async (event: Event, context: object, callback: CallbackF
                 }
 
                 if (bytelength >= 1046528 || originalFormat !== requiredFormat) {
-                    resizedImage.format(requiredFormat, { quality : quality });
+                    resizedImage.toFormat(requiredFormat, { quality : quality });
                 }
 
                 resizedImage = await resizedImage.toBuffer();
