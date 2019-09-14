@@ -2,9 +2,9 @@ import querystring from 'querystring';
 import sharp from 'sharp';
 import aws from 'aws-sdk';
 
-const s3 = new aws.S3({ region: 'ap-northeast-2' });
+const s3: object = new aws.S3({ region: 'ap-northeast-2' });
 
-const supportImageTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'tiff'];
+const supportImageTypes: string[] = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'tiff'];
 
 interface Event {
     body: string;
