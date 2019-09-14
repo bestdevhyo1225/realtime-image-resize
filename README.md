@@ -223,7 +223,7 @@
 
     1. 사용자가 `CloudFront`에 이미지를 요청합니다.
 
-    2. `CloudFront`에 이미지를 요청했으나 캐싱되어 있지 않습니다.
+    2. `CloudFront`에 이미지를 요청했으나 캐싱되어 있지 않습니다.
 
     3. `CloudFront`가 연결된 S3 버킷에 요청을 합니다.
 
@@ -251,7 +251,7 @@
 
 * 이 4가지 이벤트중에서 람다 함수가 위치하는 곳은 `Origin Response` 입니다.
 
-* `Lambda@Edge`를 구현하는데 있어서 제한 사항이 있습니다. 이 내용은 '[당근마켓 기술 블로그 - AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)' 에서 **Lambda@Edge의 제한사항**이라는 항목을 참고하시면 됩니다.
+* [[당근마켓] AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)에서 **Lambda@Edge의 제한사항**이라는 항목을 참고하여 구현했습니다.
 
 * `Lambda@Edge` 함수는 TypeScript로 작성했고, 소스 코드는 아래 링크를 확인하시면 됩니다.
 
