@@ -64,7 +64,7 @@
 
 * **Origin Access Identity**
 
-    * `Origin Access Identity`항목에서 `Create a New Identity`를 선택합니다.
+    * `Origin Access Identity` 항목에서 `Create a New Identity`를 선택합니다.
 
 * **Grant Read Permissions on Bucket**
 
@@ -89,6 +89,34 @@
         ]
     }
     ```
+
+<br>
+
+### :book: Query String Forwarding and Caching
+
+* CloudFront의 기본 옵션은 Query String을 허용하지 않는다. 이를 통해서 캐싱 능력을 향상 시키는 것이다.
+
+* 하지만 사용자는 원본 이미지를 리사이징하여 출력되기를 원하기 때문에 Query String을 통해 리사이즈에 관련된 옵션들을 전달받아야 한다. (Query String을 통한 전달 방법 이외에 다른 방법이 있을 수도 있다.)
+
+* 우선 `CloudFront Distributions`에서 편집하고자 하는 ID를 클릭하면 아래와 같은 화면이 나온다.
+
+|![edit](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/cloudfront-edit.png?raw=true)|
+|:-:|
+| CloudFront ID를 클릭하고 나서 Behaviors 탭을 누른 화면 |
+
+* `Behaviors` 탭을 눌러 편집하고자 하는 Item을 누른 후, Edit을 누르면 아래와 같은 화면이 나온다.
+
+|![behaviors](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/edit-behavior.png?raw=true)|
+|:-:|
+| Query String 관련 옵션 설정하는 화면 |
+
+* **Query String Forwarding and Caching**
+
+    * `Query String Forwarding and Caching` 옵션에서 `Forward all, cache base on whitelist`를 선택합니다.
+
+* **Query String Whitelist**
+
+    * `Query String Whitelist` 에서 추가하고자 하는 Query String을 추가하면 된다.
 
 <br>
 
