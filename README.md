@@ -251,17 +251,21 @@
 
 * 이 4가지 이벤트중에서 람다 함수가 위치하는 곳은 `Origin Response` 입니다.
 
-* [[당근마켓 기술 블로그] AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)에서 **Lambda@Edge의 제한사항**이라는 항목을 참고하여 구현했습니다.
-
 * `Lambda@Edge` 함수는 TypeScript로 작성했고, 소스 코드는 아래 링크를 확인하시면 됩니다.
 
     * [handler.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler.ts)
 
     * [handler_params.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler_params.ts)
 
+* [AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)에서 **Lambda@Edge의 제한사항**을 참고했습니다.
+
 <br>
 
 ### :book: Lambda@Edge 함수 배포하기
+
+* `Lambda`함수 등록을 위해 `serverless` 프레임워크를 사용했습니다.
+
+* `serverless` 프레임워크는 yml을 통해 AWS Lambda에 함수 업로드를 도와주는 프레임워크이고, CLI를 사용해서 업로드 할 수 있습니다.
 
 <br>
 
@@ -282,3 +286,5 @@
 * [람다 엣지로 이미지 리사이징 (2) - 람다 엣지 작성과 연결](https://afrobambacar.github.io/2018/12/image-resizing-with-lambda-edge-2.html)
 
 * [Resizing Images with Amazon CloudFront & Lambda@Edge | AWS CDN Blog](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/)
+
+* [Serverless Architecture란?](https://velopert.com/3543)
