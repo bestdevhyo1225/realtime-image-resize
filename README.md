@@ -120,6 +120,110 @@
 
 <br>
 
+### :book: IAM 정책 생성
+
+* 정책 생성을 선택합니다.
+
+* `JSON`탭을 클릭하여 아래와 같은 인라인 정책을 작성합니다.
+
+* 저는 정책 이름을 `EdgeLambdaRole`로 했습니다.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "lambda:GetFunction",
+                "lambda:EnableReplication",
+                "iam:CreateServiceLinkedRole",
+                "cloudfront:UpdateDistribution",
+                "s3:GetObject"
+                // s3:PutObject는 필요하지 않아서 넣지 않음
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+<br>
+
+### :book: IAM 역할 만들기
+
+* 역할 만들기를 선택합니다.
+
+* `Lambda` 서비스를 선택합니다.
+
+* 정책 필터에서 `EdgeLambdaRole` 정책을 검색한 후 선택합니다.
+
+* 추가로 `Lambda` 함수가 `Cloud Watch`에 로그를 쌓을 수 있도록 허용하는 AWS 관리 정책인 `AWSLambdaBasicExecutionRole`를 추가합니다.
+
+* 저는 역할 이름을 똑같이 `EdgeLambdaRole`로 했습니다.
+
+* 역할을 완성하려면 `신뢰 관계(Trust relationships)`탭에서 `신뢰 관계 편집(Edit Trust Relationships)`을 선택합니다.
+
+* `edgelambda.amazonaws.com`과 `edgelambda.amazonaws.com`을 추가합니다.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "edgelambda.amazonaws.com",
+          "lambda.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+* 마지막으로 `S3`에서 하나를 더 설정해야 합니다.
+
+* `Lambda`가 `S3`에 접근할 권한을 가졌다고 하더라도 `S3`버킷에 해당 정책이 들어있지 않으면 권한이 없다는 메시지를 출력합니다.
+
+* `EdgeLambdaRole`이 `S3`버킷에서 잘 동작할 수 있도록 `S3`의 버킷 정책을 편집해야 합니다.
+
+```json
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForCloudFrontPrivateContent",
+    "Statement": [
+        // CloudFront에서 접근할 수 있는 권한
+        {
+            "Sid": "1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/{사용자의 ORIGIN_ACCESS_IDENTITY}"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
+        },
+        // Lambda에서 접근할 수 있는 권한
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::{사용자의 계정번호}:role/EdgeLambdaRole"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
+        }
+    ]
+```
+
+<br>
+
+### :book: Image Resizing - Lambda@Edge Function 만들기
+
+<br>
+
 ### :bookmark: 참고
 
 * [AWS CloudFront](https://aws.amazon.com/ko/cloudfront/)
