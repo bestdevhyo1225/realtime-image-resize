@@ -158,7 +158,7 @@
 
 * 정책 필터에서 `EdgeLambdaRole` 정책을 검색한 후 선택합니다.
 
-* 추가로 `Lambda` 함수가 `Cloud Watch`에 로그를 쌓을 수 있도록 허용하는 AWS 관리 정책인 `AWSLambdaBasicExecutionRole`를 추가합니다.
+* `Lambda` 함수가 `Cloud Watch`에 로그를 쌓을 수 있도록 허용하는 AWS 관리 정책인 `AWSLambdaBasicExecutionRole`를 추가합니다.
 
 * 저는 역할 이름을 똑같이 `EdgeLambdaRole`로 했습니다.
 
