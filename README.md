@@ -60,7 +60,7 @@
 
     * CloudFront URL만 허용하려고 했기 때문에 반드시 이 설정을 해줘야 합니다.
 
-    * `Restrict Bucket Access`을 yes로 선택합니다.
+    * `Restrict Bucket Access`을 `Yes`로 선택합니다.
 
 * **Origin Access Identity**
 
