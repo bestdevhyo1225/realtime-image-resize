@@ -154,7 +154,7 @@
 
 * 역할 만들기를 선택합니다.
 
-* `Lambda` 서비스를 선택합니다.
+* `Lambda` 서비스를 선택합니다.
 
 * 정책 필터에서 `EdgeLambdaRole` 정책을 검색한 후 선택합니다.
 
@@ -184,9 +184,9 @@
 }
 ```
 
-* 마지막으로 `S3`에서 하나를 더 설정해야 합니다.
+* 마지막으로 `S3`에서 하나를 더 설정해야 합니다.
 
-* `Lambda`가 `S3`에 접근할 권한을 가졌다고 하더라도 `S3`버킷에 해당 정책이 들어있지 않으면 권한이 없다는 메시지를 출력합니다.
+* `Lambda`가 `S3`에 접근할 권한을 가졌다고 하더라도 `S3`버킷에 해당 정책이 들어있지 않으면 권한이 없다는 메시지를 출력합니다.
 
 * `EdgeLambdaRole`이 `S3`버킷에서 잘 동작할 수 있도록 `S3`의 버킷 정책을 편집해야 합니다.
 
@@ -195,7 +195,7 @@
     "Version": "2008-10-17",
     "Id": "PolicyForCloudFrontPrivateContent",
     "Statement": [
-        // CloudFront에서 접근할 수 있는 권한
+        // CloudFront
         {
             "Sid": "1",
             "Effect": "Allow",
@@ -205,7 +205,7 @@
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
         },
-        // Lambda에서 접근할 수 있는 권한
+        // Lambda
         {
             "Sid": "2",
             "Effect": "Allow",
