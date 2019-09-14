@@ -83,7 +83,7 @@ export const handler = async (event: Event, context: object, callback: CallbackF
             // 응답을 조작하지 않는다면 1MB 이상의 응답이 가능하다.
             while (true) {
                 resizedImage = await sharp(s3Object.body).rotate();
-                metaData     = await resizedImage.metadata();
+                metaData = await resizedImage.metadata();
 
                 if (metaData.width > width || metaData.height > height) {
                     resizedImage.resize(width, height, { fit : type });
