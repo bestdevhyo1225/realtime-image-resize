@@ -1,0 +1,38 @@
+{
+  "name": "realtime-image-resize",
+  "version": "1.0.0",
+  "description": "<br>",
+  "main": "handler.js",
+  "scripts": {
+    "build-ts": "tsc",
+    "build": "npm run build-ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bestdevhyo1225/realtime-image-resize.git"
+  },
+  "keywords": [
+    "CloudFront",
+    "Lambda@Edge",
+    "Serverless",
+    "TypeScript"
+  ],
+  "author": "janghyoseog <bestdevhyo1225@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bestdevhyo1225/realtime-image-resize/issues"
+  },
+  "homepage": "https://github.com/bestdevhyo1225/realtime-image-resize#readme",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^12.7.5",
+    "@types/sharp": "^0.22.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.528.0",
+    "querystring": "^0.2.0",
+    "sharp": "^0.23.0"
+  }
+}
