@@ -18,11 +18,11 @@
 
 <br>
 
-### :book: Image-Resize 구성도
+### :book: Image-Resizing 전체 구성도
 
 |![image-resize-architecture](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Image-resize.png?raw=true)|
 | :----------------------------------: |
-| AWS CloudFront, Lambda@Edge, S3 구성도 |
+| AWS CloudFront, Lambda@Edge, S3를 사용한 Image-Resizing |
 
 <br>
 
@@ -217,7 +217,51 @@
 
 <br>
 
-### :book: Image Resizing - Lambda@Edge Function 만들기
+### :book: Image Resize 작업을 수행하는 Lambda@Edge 함수 만들기
+
+* `Lambda` 함수를 작성하기 이전에 전체적인 흐름도는 다음과 같습니다.
+
+    1. 사용자가 `CloudFront`에 이미지를 요청합니다.
+
+    2. `CloudFront`에 이미지를 요청했으나 캐싱되어 있지 않습니다.
+
+    3. `CloudFront`가 연결된 S3 버킷에 요청을 합니다.
+
+    4. S3가 버킷에 이미지가 있는것을 확인하고 응답을 합니다.
+
+    5. 람다 함수를 통해 원본 이미지를 리사이징 합니다.
+
+    6. 리사이징한 이미지를 `CloudFront`에 캐싱 요청합니다.
+
+    7. `CloudFront`는 이미지를 캐싱하고 사용자에게 이미지를 제공합니다.
+
+* `CloudFront`는 4가지 이벤트 사이에 람다를 적용할 수 있습니다.
+
+    |<img src="https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png" width="800" height="300">|
+    |:--:|
+    | CloudFront의 전체적인 흐름도 |
+
+    * **Viewer Request**
+
+    * **Viewer Response**
+
+    * **Origin Request**
+
+    * **Origin Response**
+
+* 이 4가지 이벤트중에서 람다 함수가 위치하는 곳은 `Origin Response` 입니다.
+
+* `Lambda@Edge`를 구현하는데 있어서 제한 사항이 있습니다. 이 내용은 '[당근마켓 기술 블로그 - AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)' 에서 **Lambda@Edge의 제한사항**이라는 항목을 참고하시면 됩니다.
+
+* `Lambda@Edge` 함수는 TypeScript로 작성했고, 소스 코드는 아래 링크를 확인하시면 됩니다.
+
+    * [handler.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler.ts)
+
+    * [handler_params.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler_params.ts)
+
+<br>
+
+### :book: Lambda@Edge 함수 배포하기
 
 <br>
 
