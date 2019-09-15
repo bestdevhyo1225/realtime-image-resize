@@ -1,8 +1,7 @@
-import { Event, CallbackFunc, Response } from './handler_params';
-
+import { Event, Context, CallbackFunc, Response } from './handler-params';
 import querystring from 'querystring';
 import sharp from 'sharp';
-import aws, { S3 } from 'aws-sdk';
+import aws from 'aws-sdk';
 
 enum StatusCode {
     OK          = 200,
@@ -14,7 +13,7 @@ const s3: any = new aws.S3({ region: 'ap-northeast-2' });
 
 const supportImageTypes: string[] = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'tiff'];
 
-export const handler = async (event: Event, context: object, callback: CallbackFunc): Promise<void> => {
+export const handler = async (event: Event, context: Context, callback: CallbackFunc): Promise<void> => {
     const { request, response } = event.Records[0].cf;
 
     const bucket: string = 'hyodol-image-resizing';
