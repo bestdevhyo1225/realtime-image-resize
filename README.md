@@ -217,6 +217,14 @@
 
 <br>
 
+### :book: Docker 이미지를 통한 Sharp 모듈 빌드
+
+* Sharp 모듈을 사용하기 위해서는 `Lambda` 실행 환경에서 빌드를 해야합니다.
+
+* AWS에서는 `Lambda` 실행 환경을 Docker로 만들어 놨습니다. (정확히 말하자면 아마존 리눅스 AMI를 Docker로 제공하는 것)
+
+<br>
+
 ### :book: Image Resize 작업을 수행하는 Lambda@Edge 함수 만들기
 
 * `Lambda` 함수를 작성하기 이전에 전체적인 흐름도는 다음과 같습니다.
@@ -287,4 +295,4 @@
 
 * [Resizing Images with Amazon CloudFront & Lambda@Edge | AWS CDN Blog](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/)
 
-* [Serverless Architecture란?](https://velopert.com/3543)
+* [Serverless Architecture란?](https://velopert.com/3543)
