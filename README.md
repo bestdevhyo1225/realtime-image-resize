@@ -251,7 +251,7 @@ $ docker build --tag amazonlinux:nodejs .
 
 * sharp 모듈을 빌드할 때 주의사항은 다음과 같습니다.
 
-    * node_modules 디렉터리에 있는 Sharp 바이너리는 linux-x64 플랫폼용으로 설정되어야 하기 때문에 `npm install --arch=x64 --platform=linux --target=10.15.0 sharp --save` 형식으로 모듈을 설치해야 합니다.
+    * node_modules 디렉터리에 있는 sharp 바이너리는 linux-x64 플랫폼용으로 설정되어야 하기 때문에 `npm install --arch=x64 --platform=linux --target=10.15.0 sharp --save` 형식으로 모듈을 설치해야 합니다.
 
 ```bash
 $ docker run --rm --volume ${PWD}:/build amazonlinux:nodejs /bin/bash -c "source ~/.bashrc; npm init -f -y; npm install --arch=x64 --platform=linux --target=10.15.0 sharp --save; npm install querystring --save; npm install --only=prod"
