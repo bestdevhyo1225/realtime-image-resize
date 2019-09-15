@@ -85,7 +85,7 @@
                 "Sid": "1",
                 "Effect": "Allow",
                 "Principal": {
-                    "AWS": "arn:aws:iam::cloudfront:user/{사용자의 ORIGIN_ACCESS_IDENTITY}"
+                    "AWS": "arn:aws:iam::cloudfront:user/사용자의 ORIGIN_ACCESS_IDENTITY"
                 },
                 "Action": "s3:GetObject",
                 "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
@@ -202,7 +202,7 @@
             "Sid": "1",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::cloudfront:user/{사용자의 ORIGIN_ACCESS_IDENTITY}"
+                "AWS": "arn:aws:iam::cloudfront:user/사용자의 ORIGIN_ACCESS_IDENTITY"
             },
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
@@ -211,7 +211,7 @@
             "Sid": "2",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::{사용자의 계정번호}:role/EdgeLambdaRole"
+                "AWS": "arn:aws:iam::사용자의 계정번호:role/EdgeLambdaRole"
             },
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::hyodol-image-resizing/*"
@@ -312,6 +312,177 @@ $ docker run --rm --volume ${PWD}:/build amazonlinux:nodejs /bin/bash -c "source
 * `Lambda`함수 등록을 위해 `serverless` 프레임워크를 사용했습니다.
 
 * `serverless` 프레임워크는 yml을 통해 AWS Lambda에 함수 업로드를 도와주는 프레임워크이고, CLI를 사용해서 업로드 할 수 있습니다.
+
+*  `serverless`를 설정하는 과정은 생략하겠습니다. 아래의 링크를 참고하셔서 공부하시면 serverless에 대해 알 수 있습니다.
+
+    * [서버리스 아키텍쳐(Serverless)란?](https://velopert.com/3543)
+
+    * [AWS Lambda 로 하는 Hello World!](https://velopert.com/3546)
+
+    * [Serverless 프레임워크로 서버리스 애플리케이션 생성 및 배포하기](https://velopert.com/3549)
+
+    * [Serverless 활용하기: MongoDB 기반 RESTful CRUD API 만들기](https://velopert.com/3577)
+
+* `serverless.yml` 파일에 설정된 내용은 다음과 같습니다.
+
+```yaml
+service: image-resizing
+
+custom:
+    bucketName: 버킷 이름
+
+# Lambda@Edge는 us-east-1에 배포해야 합니다.
+provider:
+    name: aws
+    runtime: nodejs10.x
+    region: us-east-1
+    endPointType: Edge
+    timeout: 30
+
+functions:
+    imageResize:
+        role: arn:aws:iam::사용자의 계정번호:role/EdgeLambdaRole
+        handler: dist/handler.handler
+        package:
+        include:
+            - node_modules/**
+            - dist/handler.js
+```
+    
+* `Lambda`에 업로드 하려면 아래의 명령어를 입력합니다.
+
+```bash
+$ serverless deploy
+```
+
+<br>
+
+### :book: CloudFront에 Lambda@Edge 함수 연결하기
+
+* `CloudFront`에서 Behaviors 탭을 누릅니다.
+
+* Lambda Function Associations 항목에서 CloudFront Event를 Origin Response로 선택합니다.
+
+* 그 다음 Lambda Function ARN을 입력해야 하는데요 주의할 사항은 Lambda의 Version이 포함된 ARN을 입력해야 합니다.
+
+    * 버전 값을 확인하는 방법은 `Lambda` 함수로 들어가서 구분자(Qualifiers)를 클릭하면 Version을 확인할 수 있습니다.
+
+* 구분자(Qualifiers)에서 $LATEST 라는 값이 있습니다. 이 값은 `CloudFront`에 등록하는 `Lambda` 함수 ARN으로 사용할 수 없습니다.
+
+    * Why????
+    
+    * `Lambda` 함수가 갱신되는 경우에 새로운 함수를 적용하기 위해서 `CloudFront`에 수동으로 함수를 연결해야 하는 번거로움이 있기 때문입니다.
+
+<br>
+
+### :book: Lambda@Edge 함수에 CloudFront 트리거 등록
+
+* `CloudFront`에 이벤트를 연결했어도 아직 자동으로 `Lambda` 함수가 갱신되지 않는경우에는 수동으로 해줘야 합니다.
+
+* 트리거 추가를 클릭하고 트리거 구성에서 `CloudFront`를 선택합니다.
+
+* CloudFront 이벤트 항목에서 Origin Response로 선택한 후, 추가하면 됩니다.
+
+### :book: Lambda 함수 테스트
+
+* Lambda 함수 내부에서 오른쪽 상단에 테스트 버튼이 있습니다.
+
+* 테스트 버튼을 클릭한 후, 이벤트 이름을 정합니다.
+
+* JSON 내부에는 아래와 같이 작성하여 테스트를 진행했습니다. ([Lambda@Edge 이벤트 구조 - 응답 이벤트](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-event-structure.html#lambda-event-structure-response))
+
+```json
+{
+  "Records": [
+    {
+      "cf": {
+        "config": {
+          "distributionDomainName": "{본인 CloudFront의 Domain name}",
+          "distributionId": "{본인 CloudFront의 ID}",
+          "eventType": "origin-response",
+          "requestId": "xGN7KWpVEmB9Dp7ctcVFQC4E-nrcOcEKS3QyAez--06dV7TEXAMPLE=="
+        },
+        "request": {
+          "clientIp": "2001:0db8:85a3:0:0:8a2e:0370:7334",
+          "method": "GET",
+          "uri": "/sample.png",
+          "querystring": "s=256x256&f=webp",
+          "headers": {
+            "host": [
+              {
+                "key": "Host",
+                "value": "{본인 CloudFront의 Domain name}"
+              }
+            ],
+            "user-agent": [
+              {
+                "key": "User-Agent",
+                "value": "curl/7.18.1"
+              }
+            ]
+          }
+        },
+        "response": {
+          "status": "200",
+          "statusDescription": "OK",
+          "headers": {
+            "server": [
+              {
+                "key": "Server",
+                "value": "MyCustomOrigin"
+              }
+            ],
+            "set-cookie": [
+              {
+                "key": "Set-Cookie",
+                "value": "theme=light"
+              },
+              {
+                "key": "Set-Cookie",
+                "value": "sessionToken=abc123; Expires=Wed, 09 Jun 2021 10:18:14 GMT"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### :book: CloudFront Domain Name으로 접속해서 이미지 보기
+
+* 저는 아래와 같은 URL로 접속했습니다. (sample2.jpg 이미지는 사전에 S3 버킷에 저장해놨습니다.)
+
+```
+https://{본인 CloudFront의 Domain Name}/sample2.jpg?s=256x256&f=webp
+```
+
+* `Cache - Miss from cloudfront`
+
+|![1](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Miss-from-cloudfront1.png?raw=true)|
+| :--: |
+| 처음 요청하는 경우에는 `Cache Miss` 이기 때문에 S3에 이미지를 요청하고, Lambda 함수를 통해 이미지를 리사이징한다. |
+
+|![2](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Miss-from-cloudfront2.png?raw=true)|
+| :--: |
+|  `169.76ms`의 시간이 소요된다. |
+
+* `Cache - Hit from cloudfront`
+
+|![1](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Hit-from-cloudfront.png?raw=true)|
+| :--: |
+| `Cache Hit` 이면, CloudFront에서 캐싱된 이미지를 제공한다. |
+
+|![2](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Hit-from-cloudfront2.png?raw=true)|
+| :--: |
+|  `51.01ms`의 시간이 소요된다. |
+
+<br>
+
+### :book: 정리
+
+우연히 [당근마켓 팀 블로그](https://medium.com/?daangn)를 보다가 직접 구현해보고 싶었습니다. AWS 서비스를 공부하고, 여러 자료를 찾아보고 삽질의 과정을 통해 구현할 수 있었습니다. 이 문서를 작성하는 이유는 누군가에게 이렇게 안내해주는 문서가 아니라 내가 까먹지 않고 나중에 복습하기 위해서 작성한 문서임을 참고해주시면 감사하겠습니다. 마지막으로 Linux, Shell-Script, Docker, AWS 서비스와 같은 백엔드 및 IT 인프라에 대해 끊임없이 공부해야 된다는 것을 느꼈습니다.
 
 <br>
 
