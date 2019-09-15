@@ -54,6 +54,10 @@
 
     * `Origin Domain Name`은 방금 생성한 S3 도메인을 선택합니다.
 
+* **Compress Objects Automatically**
+
+    * `Compress Objects Automatically`를 `Yes`로 선택합니다. (압축하는 옵션입니다.)
+
 * **Restrict Bucket Access**
 
     * 현재 S3 버킷은 공개된 버킷이 아닙니다. S3 URL을 브라우저에 입력해도 이미지가 나오지 않습니다.
