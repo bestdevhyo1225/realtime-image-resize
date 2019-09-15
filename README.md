@@ -458,7 +458,7 @@ $ serverless deploy
 https://{본인 CloudFront의 Domain Name}/sample2.jpg?s=256x256&f=webp
 ```
 
-* **Cache - Miss from cloudfront**
+* **`Cache - Miss from cloudfront`**
 
 |![1](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Miss-from-cloudfront1.png?raw=true)|
 | :--: |
@@ -468,7 +468,7 @@ https://{본인 CloudFront의 Domain Name}/sample2.jpg?s=256x256&f=webp
 | :--: |
 |  `169.76ms`의 시간이 소요된다. |
 
-* **Cache - Hit from cloudfront**
+* **`Cache - Hit from cloudfront`**
 
 |![1](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/image/Hit-from-cloudfront.png?raw=true)|
 | :--: |
