@@ -383,6 +383,8 @@ $ serverless deploy
 
 * CloudFront 이벤트 항목에서 Origin Response로 선택한 후, 추가하면 됩니다.
 
+<br>
+
 ### :book: Lambda 함수 테스트
 
 * Lambda 함수 내부에서 오른쪽 상단에 테스트 버튼이 있습니다.
@@ -449,6 +451,8 @@ $ serverless deploy
   ]
 }
 ```
+
+<br>
 
 ### :book: CloudFront Domain Name으로 접속해서 이미지 보기
 
