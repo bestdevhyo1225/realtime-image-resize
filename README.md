@@ -217,11 +217,45 @@
 
 <br>
 
-### :book: Docker 이미지를 통한 Sharp 모듈 빌드
+### :book: Docker 이미지를 통한 sharp 모듈 빌드
 
 * Sharp 모듈을 사용하기 위해서는 `Lambda` 실행 환경에서 빌드를 해야합니다.
 
 * AWS에서는 `Lambda` 실행 환경을 Docker로 만들어 놨습니다. (정확히 말하자면 아마존 리눅스 AMI를 Docker로 제공하는 것)
+
+* 아래의 `Dockerfile`은 Amazon Linux를 가져와서 nvm(node version manager)를 설치하고, NodeJS 10.x을 설치합니다.
+
+```dockerfile
+FROM amazonlinux:1
+
+WORKDIR /tmp
+
+RUN yum -y install gcc-c++ && yum -y install findutils
+
+RUN touch ~/.bashrc && chmod +x ~/.bashrc
+
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
+
+RUN source ~/.bashrc && nvm install 10
+
+WORKDIR /build
+```
+
+* `Dockerfile`이 있는 위치에서 아래 명령어를 통해 빌드를 하여 Docker 이미지를 만듭니다.
+
+``` bash
+$ docker build --tag amazonlinux:nodejs .
+```
+
+* 그 다음 sharp 모듈을 빌드 해야합니다. 아래 명령어는 Docker 인스턴스에서 빌드한 결과물을 볼륨 마운트를 통해 Docker 밖으로 결과물을 만들어 냅니다. 즉, 명령어를 실행하는 위치에 node_modules를 만듭니다.
+
+* sharp 모듈을 빌드할 때 주의사항은 다음과 같습니다.
+
+    * node_modules 디렉터리에 있는 Sharp 바이너리는 linux-x64 플랫폼용으로 설정되어야 하기 때문에 `npm install --arch=x64 --platform=linux --target=10.15.0 sharp --save` 형식으로 모듈을 설치해야 합니다.
+
+```bash
+$ docker run --rm --volume ${PWD}:/build amazonlinux:nodejs /bin/bash -c "source ~/.bashrc; npm init -f -y; npm install --arch=x64 --platform=linux --target=10.15.0 sharp --save; npm install querystring --save; npm install --only=prod"
+```
 
 <br>
 
