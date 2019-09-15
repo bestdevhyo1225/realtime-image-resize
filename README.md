@@ -297,7 +297,7 @@ $ docker run --rm --volume ${PWD}:/build amazonlinux:nodejs /bin/bash -c "source
 
     * [handler.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler.ts)
 
-    * [handler_params.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler_params.ts)
+    * [handler-params.ts](https://github.com/bestdevhyo1225/realtime-image-resize/blob/master/src/handler-params.ts)
 
 * [AWS Lambda@Edge에서 실시간 이미지 리사이즈 & WebP 형식으로 변환](https://medium.com/daangn/lambda-edge로-구현하는-on-the-fly-이미지-리사이징-f4e5052d49f3)에서 **Lambda@Edge의 제한사항**을 참고했습니다.
 
