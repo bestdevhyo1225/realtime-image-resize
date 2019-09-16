@@ -35,7 +35,7 @@ export const handler = async (event: Event, context: Context, callback: Callback
         const sizeMatch:    string[] = params.s.split('x');
         const typeMatch:    string   = params.t;
         const qualityMatch: string   = params.q;
-        const formatMath:   string   = params.f;
+        const formatMatch:  string   = params.f;
 
         let originalFormat: string = key.match(/(.*)\.(.*)/)[2].toLowerCase();
 
@@ -56,7 +56,7 @@ export const handler = async (event: Event, context: Context, callback: Callback
 
         // correction for jpg required for 'Sharp'
         originalFormat = originalFormat === 'jpg' ? 'jpeg' : originalFormat;
-        let requiredFormat: string = formatMath === 'webp' ? 'webp' : originalFormat;
+        let requiredFormat: string = formatMatch === 'webp' ? 'webp' : originalFormat;
 
         try {
             const s3Object: any = await s3.getObject({ Bucket: bucket, Key: key }).promise();
