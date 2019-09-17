@@ -167,7 +167,7 @@
 
 * 역할을 완성하려면 `신뢰 관계(Trust relationships)`탭에서 `신뢰 관계 편집(Edit Trust Relationships)`을 선택합니다.
 
-* `edgelambda.amazonaws.com`과 `edgelambda.amazonaws.com`을 추가합니다.
+* `edgelambda.amazonaws.com`과 `lambda.amazonaws.com`을 추가합니다.
 
 ```json
 {
