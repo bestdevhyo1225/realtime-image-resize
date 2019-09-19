@@ -1,21 +1,23 @@
 service: image-resizing
 
 custom:
-  bucketName: hyodol-image-resizing
+  STAGE: ${self:provider.stage}
+  SECRET: ${file(./dist/config/secret.js):secret}
 
 # Lambda@Edge는 us-east-1에 배포해야 합니다.
 provider:
   name: aws
   runtime: nodejs10.x
-  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.SECRET.REGION}
   endPointType: Edge
   timeout: 30
 
 functions:
   imageResize:
-    role: arn:aws:iam::304968239554:role/EdgeLambdaRole
-    handler: dist/handler.handler
+    role: ${self:custom.SECRET.EDGE_LAMBDA_ROLE_ARN}
+    handler: dist/src/handler.handler
     package:
       include:
         - node_modules/**
-        - dist/handler.js
+        - dist/src/handler.js
