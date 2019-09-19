@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 
-if (fs.readFileSync('.env')) {
+if (fs.existsSync('.env')) {
     dotenv.config({ path : '.env' });
 }
 
-const MY_ACCOUNT_NUMBER = process.env.MY_ACCOUNT_NUMBER as string;
-
-export default { MY_ACCOUNT_NUMBER }
+export const secret = () => ({
+    EDGE_LAMBDA_ROLE_ARN : process.env.EDGE_LAMBDA_ROLE_ARN as string,
+    REGION : process.env.REGION as string
+});
