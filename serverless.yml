@@ -4,7 +4,6 @@ custom:
   STAGE: ${self:provider.stage}
   SECRET: ${file(./dist/config/secret.js):secret}
 
-# Lambda@Edge는 us-east-1에 배포해야 합니다.
 provider:
   name: aws
   runtime: nodejs10.x
