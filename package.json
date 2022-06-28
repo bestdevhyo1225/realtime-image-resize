@@ -35,6 +35,7 @@
     "aws-sdk": "^2.732.0",
     "minimist": "^1.2.6",
     "querystring": "^0.2.0",
-    "sharp": "^0.25.4"
+    "sharp": "^0.25.4",
+    "simple-get": "^4.0.1"
   }
 }
