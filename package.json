@@ -33,6 +33,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1163.0",
+    "color": "^4.2.3",
+    "color-string": "^1.9.1",
     "minimist": "^1.2.6",
     "querystring": "^0.2.1",
     "sharp": "^0.25.4",
